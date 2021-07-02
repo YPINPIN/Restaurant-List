@@ -17,7 +17,7 @@ app.use(express.static('public'))
 
 // 處理request & response
 app.get('/', (req, res) => {
-  res.render('index')
+  res.render('index', { restaurants: restaurantList.results })
 })
 
 // 啟動&監聽 Server
