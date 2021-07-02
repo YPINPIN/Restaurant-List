@@ -28,6 +28,17 @@ app.get('/restaurants/:restaurantId', (req, res) => {
   res.render('show', { restaurant })
 })
 
+// 搜尋餐廳(名稱、分類)
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword.trim()
+  const restaurants = restaurantList.results.filter(
+    (restaurant) =>
+      restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
+      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+  )
+  res.render('index', { restaurants, keyword })
+})
+
 // 啟動&監聽 Server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
