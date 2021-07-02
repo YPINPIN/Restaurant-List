@@ -20,6 +20,14 @@ app.get('/', (req, res) => {
   res.render('index', { restaurants: restaurantList.results })
 })
 
+// 餐廳資訊
+app.get('/restaurants/:restaurantId', (req, res) => {
+  const restaurant = restaurantList.results.find(
+    (restaurant) => restaurant.id.toString() === req.params.restaurantId
+  )
+  res.render('show', { restaurant })
+})
+
 // 啟動&監聽 Server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
