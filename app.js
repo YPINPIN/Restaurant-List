@@ -5,6 +5,8 @@ const app = express()
 const port = 3000
 // express-handlebars
 const exphbs = require('express-handlebars')
+// 載入 restaurant list 資料
+const restaurantList = require('./restaurant.json')
 
 // 設定template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
