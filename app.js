@@ -10,6 +10,9 @@ const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+// 設定 static files
+app.use(express.static('public'))
+
 // 處理request & response
 app.get('/', (req, res) => {
   res.render('index')
