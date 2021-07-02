@@ -2,6 +2,14 @@ header {
   overflow: hidden;
 }
 
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5;
+  box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
+}
+
 .navbar .navbar-brand {
   color: #4592af;
 }
@@ -14,6 +22,7 @@ header {
   position: relative;
   z-index: -1;
   margin: -5px;
+  margin-top: 50px;
   height: 360px;
   background: #dddddd center center
     url('https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5720/restaurants-list-cover.jpg');
@@ -55,6 +64,11 @@ header {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
+.card:hover {
+  box-shadow: 0 2px 4px rgb(0, 0, 0, 0.2);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
 .card img {
   height: 180px;
 }
@@ -63,6 +77,10 @@ header {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.fa-star {
+  color: gold;
 }
 
 .restaurant-category {
