@@ -97,6 +97,27 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.tooltip-inner {
+  background-color: rgba(0, 0, 0, 0.95);
+  border: 2px solid lightskyblue;
+}
+
+.bs-tooltip-top .arrow::before {
+  border-top-color: lightskyblue;
+}
+
+.bs-tooltip-right .arrow::before {
+  border-right-color: lightskyblue;
+}
+
+.bs-tooltip-bottom .arrow::before {
+  border-bottom-color: lightskyblue;
+}
+
+.bs-tooltip-left .arrow::before {
+  border-left-color: lightskyblue;
+}
+
 @media screen and (max-width: 992px) {
   .card img {
     height: 115px;
