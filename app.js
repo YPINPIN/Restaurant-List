@@ -5,8 +5,26 @@ const app = express()
 const port = 3000
 // express-handlebars
 const exphbs = require('express-handlebars')
+// mongoose
+const mongoose = require('mongoose')
 // 載入 restaurant list 資料
 const restaurantList = require('./restaurant.json')
+
+// 設定連線到 mongoDB
+mongoose.connect('mongodb://localhost/restaurant-list', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+// 取得資料庫連線狀態
+const db = mongoose.connection
+// 連線異常
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+// 連線成功
+db.once('open', () => {
+  console.log('mongodb connected')
+})
 
 // 設定template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
