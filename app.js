@@ -42,12 +42,11 @@ app.get('/', (req, res) => {
     .catch((error) => console.error(error))
 })
 
-// 餐廳資訊 TODO:待修正
-app.get('/restaurants/:restaurantId', (req, res) => {
-  /*const restaurant = restaurantList.results.find(
-    (restaurant) => restaurant.id.toString() === req.params.restaurantId
-  )
-  res.render('show', { restaurant })*/
+// 餐廳資訊
+app.get('/restaurants/:id', (req, res) => {
+  Restaurant.findById(req.params.id)
+    .lean()
+    .then((restaurant) => res.render('detail', { restaurant }))
 })
 
 // 搜尋餐廳(名稱、分類)
