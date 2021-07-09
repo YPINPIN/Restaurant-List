@@ -7,8 +7,8 @@ const port = 3000
 const exphbs = require('express-handlebars')
 // mongoose
 const mongoose = require('mongoose')
-// 載入 restaurant list 資料
-const restaurantList = require('./restaurant.json')
+// restaurant model
+const Restaurant = require('./models/restaurant')
 
 // 設定連線到 mongoDB
 mongoose.connect('mongodb://localhost/restaurant-list', {
@@ -34,32 +34,41 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 // 處理request & response
+// 餐廳列表
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  Restaurant.find()
+    .lean()
+    .then((restaurants) => res.render('index', { restaurants }))
+    .catch((error) => console.error(error))
 })
 
-// 餐廳資訊
+// 餐廳資訊 TODO:待修正
 app.get('/restaurants/:restaurantId', (req, res) => {
-  const restaurant = restaurantList.results.find(
+  /*const restaurant = restaurantList.results.find(
     (restaurant) => restaurant.id.toString() === req.params.restaurantId
   )
-  res.render('show', { restaurant })
+  res.render('show', { restaurant })*/
 })
 
 // 搜尋餐廳(名稱、分類)
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
-  const restaurants = restaurantList.results.filter(
-    (restaurant) =>
-      restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-  )
-  // 是否無相關餐廳資料
-  const searchTip =
-    restaurants.length === 0
-      ? `<h1 class="text-info text-center">查無餐廳資料</h1>`
-      : ''
-  res.render('index', { restaurants, keyword, searchTip })
+  Restaurant.find()
+    .lean()
+    .then((restaurantList) => {
+      const restaurants = restaurantList.filter(
+        (restaurant) =>
+          restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+      )
+      // 是否無相關餐廳資料
+      const searchTip =
+        restaurants.length === 0
+          ? `<h1 class="text-info text-center">查無餐廳資料</h1>`
+          : ''
+      res.render('index', { restaurants, keyword, searchTip })
+    })
+    .catch((error) => console.error(error))
 })
 
 // 啟動&監聽 Server
