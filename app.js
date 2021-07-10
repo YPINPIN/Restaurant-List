@@ -85,6 +85,47 @@ app.get('/restaurants/:id', (req, res) => {
     .catch((error) => console.log(error))
 })
 
+// 餐廳編輯表單
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => {
+      Restaurant.find()
+        .lean()
+        .then((restaurants) => {
+          const categories = new Set(
+            restaurants.map((restaurant) => restaurant.category)
+          )
+          res.render('edit', { restaurant, categories })
+        })
+        .catch((error) => console.error(error))
+    })
+    .catch((error) => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  // 從 req.body 拿出表單裡的資料
+  const newRestaurant = req.body
+  // 資料庫修改餐廳資料
+  Restaurant.findById(id)
+    .then((restaurant) => {
+      restaurant.name = newRestaurant.name
+      restaurant.name_en = newRestaurant.name_en
+      restaurant.category = newRestaurant.category
+      restaurant.image = newRestaurant.image
+      restaurant.location = newRestaurant.location
+      restaurant.phone = newRestaurant.phone
+      restaurant.google_map = newRestaurant.google_map
+      restaurant.rating = newRestaurant.rating
+      restaurant.description = newRestaurant.description
+      return restaurant.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log(error))
+})
+
 // 搜尋餐廳(名稱、分類)
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
