@@ -9,6 +9,8 @@ AlphaCamp Project : Restaurant-List
 - 使用者可以在首頁看到所有餐廳與它們的簡單資料, incl. 餐廳照片、餐廳名稱、餐廳分類、餐廳評分、描述
 - 使用者可以再點進去看餐廳的詳細資訊：類別、地址、電話、描述、圖片
 - 使用者可以透過搜尋餐廳名稱 or 餐廳類別來找到特定的餐廳
+- 使用者可以點擊畫面右下角的 + 新增一家餐廳
+- 使用者可以點擊餐廳卡片右下角按鈕進行更多操作(編輯、查看、刪除)
 
 ## 專案畫面演示
 
@@ -22,6 +24,8 @@ AlphaCamp Project : Restaurant-List
 - [nodemon](https://www.npmjs.com/package/nodemon)
 - [Express](https://www.npmjs.com/package/express)
 - [Express Handlebars](https://www.npmjs.com/package/express-handlebars)
+- [MongoDB](https://www.mongodb.com/try/download/community)
+- [mongoose](https://www.npmjs.com/package/mongoose)
 
 ## 安裝專案
 
@@ -41,6 +45,12 @@ cd Restaurant-List
 
 ```
 npm install
+```
+
+### 4. 加入種子資料
+
+```
+npm run seed
 ```
 
 ### 4. Terminal 輸入以下指令啟動伺服器
