@@ -127,6 +127,11 @@ header {
   box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
 }
 
+.btn-restaurant-group {
+  right: 10px;
+  bottom: 20px;
+}
+
 .dropdown-menu {
   min-width: 100px;
 }

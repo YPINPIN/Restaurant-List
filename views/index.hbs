@@ -32,7 +32,7 @@
     <div class='col-md-10 col-12 mx-auto'>
       <div class='card-columns'>
         {{#each restaurants}}
-          <div class='mb-4'>
+          <div class='mb-3 position-relative'>
             <a href='/restaurants/{{this._id}}' class='text-secondary'>
               <div class='card'>
                 <img
@@ -59,11 +59,10 @@
                     {{this.rating}}
                     <i class='fas fa-star fa-xs'></i>
                   </span>
-
                 </div>
               </div>
             </a>
-            <div class='text-right mr-1'>
+            <div class='btn-restaurant-group position-absolute'>
               <div class='btn-group' role='group'>
                 <button
                   id='btnGroupDropRestaurant'
