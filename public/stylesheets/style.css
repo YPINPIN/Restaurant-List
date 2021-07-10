@@ -131,6 +131,11 @@ header {
   min-width: 100px;
 }
 
+.btn-restaurant-group {
+  right: 10px;
+  bottom: 12px;
+}
+
 @media screen and (max-width: 992px) {
   .card img {
     height: 115px;
