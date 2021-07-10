@@ -118,6 +118,15 @@ header {
   border-left-color: lightskyblue;
 }
 
+.btn-new,
+.btn-back {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 5;
+  box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
+}
+
 @media screen and (max-width: 992px) {
   .card img {
     height: 115px;

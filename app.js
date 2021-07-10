@@ -29,6 +29,8 @@ db.once('open', () => {
 // 設定template engine
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
+// body-parser
+app.use(express.urlencoded({ extended: true }))
 
 // 設定 static files
 app.use(express.static('public'))
@@ -40,6 +42,38 @@ app.get('/', (req, res) => {
     .lean()
     .then((restaurants) => res.render('index', { restaurants }))
     .catch((error) => console.error(error))
+})
+
+// 新增餐廳資料表單
+app.get('/restaurants/new', (req, res) => {
+  Restaurant.find()
+    .lean()
+    .then((restaurants) => {
+      const categories = new Set(
+        restaurants.map((restaurant) => restaurant.category)
+      )
+      res.render('new', { categories })
+    })
+    .catch((error) => console.error(error))
+})
+
+app.post('/restaurants', (req, res) => {
+  // 從 req.body 拿出表單裡的資料
+  const restaurant = req.body
+  // 資料庫新增餐廳資料
+  Restaurant.create({
+    name: restaurant.name,
+    name_en: restaurant.name_en,
+    category: restaurant.category,
+    image: restaurant.image,
+    location: restaurant.location,
+    phone: restaurant.phone,
+    google_map: restaurant.google_map,
+    rating: restaurant.rating,
+    description: restaurant.description,
+  })
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log(error))
 })
 
 // 餐廳資訊
