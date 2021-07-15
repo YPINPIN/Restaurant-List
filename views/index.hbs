@@ -83,21 +83,15 @@
                     class='dropdown-item text-success text-center'
                     href='/restaurants/{{this._id}}'
                   >Detail</a>
-                  <form
-                    action='/restaurants/{{this._id}}/delete'
-                    method='POST'
-                    class='mb-0'
+                  <!-- Button trigger delete-modal -->
+                  <button
+                    type='button'
+                    class='dropdown-item text-danger text-center'
+                    data-toggle='modal'
+                    data-target='#delete-modal'
                   >
-                    <!-- Button trigger delete-modal -->
-                    <button
-                      type='button'
-                      class='dropdown-item text-danger text-center'
-                      data-toggle='modal'
-                      data-target='#delete-modal'
-                    >
-                      Delete
-                    </button>
-                  </form>
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>
