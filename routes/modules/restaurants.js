@@ -3,6 +3,9 @@ const express = require('express')
 const router = express.Router()
 // restaurant model
 const Restaurant = require('../../models/restaurant')
+// sortData
+const sortHelpers = require('../../tools/sortHelpers')
+const sortData = sortHelpers.sortData
 
 // 新增餐廳資料表單
 router.get('/new', (req, res) => {
@@ -20,8 +23,10 @@ router.get('/new', (req, res) => {
 // 搜尋餐廳(名稱、分類)
 router.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
+  const sortBy = req.query.sortBy
   Restaurant.find()
     .lean()
+    .sort(sortData[sortBy].sort)
     .then((restaurantList) => {
       const restaurants = restaurantList.filter(
         (restaurant) =>
@@ -33,7 +38,7 @@ router.get('/search', (req, res) => {
         restaurants.length === 0
           ? `<h1 class="text-info text-center">查無餐廳資料</h1>`
           : ''
-      res.render('index', { restaurants, keyword, searchTip })
+      res.render('index', { restaurants, sortData, sortBy, keyword, searchTip })
     })
     .catch((error) => console.error(error))
 })

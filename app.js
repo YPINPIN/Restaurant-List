@@ -14,7 +14,14 @@ require('./config/mongoose')
 const app = express()
 
 // 設定template engine
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine(
+  'hbs',
+  exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
+    helpers: require('./tools/handlebarsHelpers'),
+  })
+)
 app.set('view engine', 'hbs')
 // body-parser
 app.use(express.urlencoded({ extended: true }))

@@ -3,12 +3,18 @@ const express = require('express')
 const router = express.Router()
 // restaurant model
 const Restaurant = require('../../models/restaurant')
+// sortData
+const sortHelpers = require('../../tools/sortHelpers')
+const sortData = sortHelpers.sortData
 
 // 餐廳列表
 router.get('/', (req, res) => {
+  const sortBy = 'normal'
   Restaurant.find()
     .lean()
-    .then((restaurants) => res.render('index', { restaurants }))
+    .then((restaurants) =>
+      res.render('index', { restaurants, sortData, sortBy })
+    )
     .catch((error) => console.error(error))
 })
 

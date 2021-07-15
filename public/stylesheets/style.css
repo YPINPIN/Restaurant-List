@@ -50,7 +50,8 @@ header {
   font-size: 0.8rem;
 }
 
-.btn-major {
+.btn-major,
+.text-major {
   background-color: #9b4b4b;
   color: white;
 }
