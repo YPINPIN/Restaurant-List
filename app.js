@@ -6,8 +6,8 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 // method-override
 const methodOverride = require('method-override')
-// restaurant model
-const Restaurant = require('./models/restaurant')
+// 引用路由器，會自動抓取index
+const routes = require('./routes')
 // 設定Server Port
 const port = 3000
 
@@ -38,127 +38,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
-
-// 處理request & response
-// 餐廳列表
-app.get('/', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .then((restaurants) => res.render('index', { restaurants }))
-    .catch((error) => console.error(error))
-})
-
-// 新增餐廳資料表單
-app.get('/restaurants/new', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .then((restaurants) => {
-      const categories = new Set(
-        restaurants.map((restaurant) => restaurant.category)
-      )
-      res.render('new', { categories })
-    })
-    .catch((error) => console.error(error))
-})
-
-app.post('/restaurants', (req, res) => {
-  // 從 req.body 拿出表單裡的資料
-  const restaurant = req.body
-  // 資料庫新增餐廳資料
-  Restaurant.create({
-    name: restaurant.name,
-    name_en: restaurant.name_en,
-    category: restaurant.category,
-    image: restaurant.image,
-    location: restaurant.location,
-    phone: restaurant.phone,
-    google_map: restaurant.google_map,
-    rating: restaurant.rating,
-    description: restaurant.description,
-  })
-    .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
-})
-
-// 餐廳資訊
-app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render('detail', { restaurant }))
-    .catch((error) => console.log(error))
-})
-
-// 餐廳編輯表單
-app.get('/restaurants/:id/edit', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => {
-      Restaurant.find()
-        .lean()
-        .then((restaurants) => {
-          const categories = new Set(
-            restaurants.map((restaurant) => restaurant.category)
-          )
-          res.render('edit', { restaurant, categories })
-        })
-        .catch((error) => console.error(error))
-    })
-    .catch((error) => console.log(error))
-})
-
-app.put('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  // 從 req.body 拿出表單裡的資料
-  const newRestaurant = req.body
-  // 資料庫修改餐廳資料
-  Restaurant.findById(id)
-    .then((restaurant) => {
-      restaurant.name = newRestaurant.name
-      restaurant.name_en = newRestaurant.name_en
-      restaurant.category = newRestaurant.category
-      restaurant.image = newRestaurant.image
-      restaurant.location = newRestaurant.location
-      restaurant.phone = newRestaurant.phone
-      restaurant.google_map = newRestaurant.google_map
-      restaurant.rating = newRestaurant.rating
-      restaurant.description = newRestaurant.description
-      return restaurant.save()
-    })
-    .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
-})
-
-app.delete('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  // 資料庫刪除餐廳資料
-  Restaurant.findById(id)
-    .then((restaurant) => restaurant.remove())
-    .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
-})
-
-// 搜尋餐廳(名稱、分類)
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim()
-  Restaurant.find()
-    .lean()
-    .then((restaurantList) => {
-      const restaurants = restaurantList.filter(
-        (restaurant) =>
-          restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-          restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-      )
-      // 是否無相關餐廳資料
-      const searchTip =
-        restaurants.length === 0
-          ? `<h1 class="text-info text-center">查無餐廳資料</h1>`
-          : ''
-      res.render('index', { restaurants, keyword, searchTip })
-    })
-    .catch((error) => console.error(error))
-})
+// 將 request 導入路由器
+app.use(routes)
 
 // 啟動&監聽 Server
 app.listen(port, () => {
