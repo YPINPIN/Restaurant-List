@@ -137,9 +137,15 @@ header {
   bottom: 12px;
 }
 
+@media screen and (max-width: 1200px) {
+  .card img {
+    height: 160px;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .card img {
-    height: 115px;
+    height: 130px;
   }
 }
 
