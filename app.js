@@ -1,14 +1,17 @@
 // Express
 const express = require('express')
-const app = express()
-// 設定Server Port
-const port = 3000
 // express-handlebars
 const exphbs = require('express-handlebars')
 // mongoose
 const mongoose = require('mongoose')
+// method-override
+const methodOverride = require('method-override')
 // restaurant model
 const Restaurant = require('./models/restaurant')
+// 設定Server Port
+const port = 3000
+
+const app = express()
 
 // 設定連線到 mongoDB
 mongoose.connect('mongodb://localhost/restaurant-list', {
@@ -31,9 +34,10 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 // body-parser
 app.use(express.urlencoded({ extended: true }))
-
 // 設定 static files
 app.use(express.static('public'))
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 // 處理request & response
 // 餐廳列表
@@ -104,7 +108,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch((error) => console.log(error))
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   // 從 req.body 拿出表單裡的資料
   const newRestaurant = req.body
@@ -126,7 +130,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
     .catch((error) => console.log(error))
 })
 
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   // 資料庫刪除餐廳資料
   Restaurant.findById(id)

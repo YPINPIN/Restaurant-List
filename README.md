@@ -26,6 +26,7 @@ AlphaCamp Project : Restaurant-List
 - [Express Handlebars](https://www.npmjs.com/package/express-handlebars)
 - [MongoDB](https://www.mongodb.com/try/download/community)
 - [mongoose](https://www.npmjs.com/package/mongoose)
+- [method-override](https://www.npmjs.com/package/method-override)
 
 ## 安裝專案
 

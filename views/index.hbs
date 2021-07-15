@@ -129,7 +129,10 @@
                     class='btn btn-secondary'
                     data-dismiss='modal'
                   >取消</button>
-                  <form action='/restaurants/{{this._id}}/delete' method='POST'>
+                  <form
+                    action='/restaurants/{{this._id}}?_method=DELETE'
+                    method='POST'
+                  >
                     <button
                       type='submit'
                       class='btn btn-danger'
