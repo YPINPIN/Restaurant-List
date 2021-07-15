@@ -88,7 +88,7 @@
                     type='button'
                     class='dropdown-item text-danger text-center'
                     data-toggle='modal'
-                    data-target='#delete-modal'
+                    data-target='#delete-modal-{{this._id}}'
                   >
                     Delete
                   </button>
@@ -100,7 +100,7 @@
           <!-- Modal -->
           <div
             class='modal fade'
-            id='delete-modal'
+            id='delete-modal-{{this._id}}'
             data-backdrop='static'
             data-keyboard='false'
             tabindex='-1'
