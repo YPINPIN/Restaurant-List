@@ -33,12 +33,7 @@ router.get('/search', (req, res) => {
           restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
           restaurant.category.toLowerCase().includes(keyword.toLowerCase())
       )
-      // 是否無相關餐廳資料
-      const searchTip =
-        restaurants.length === 0
-          ? `<h1 class="text-info text-center">查無餐廳資料</h1>`
-          : ''
-      res.render('index', { restaurants, sortData, sortBy, keyword, searchTip })
+      res.render('index', { restaurants, sortData, sortBy, keyword })
     })
     .catch((error) => console.error(error))
 })

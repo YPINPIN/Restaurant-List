@@ -9,12 +9,9 @@ const sortData = sortHelpers.sortData
 
 // 餐廳列表
 router.get('/', (req, res) => {
-  const sortBy = 'normal'
   Restaurant.find()
     .lean()
-    .then((restaurants) =>
-      res.render('index', { restaurants, sortData, sortBy })
-    )
+    .then((restaurants) => res.render('index', { restaurants, sortData }))
     .catch((error) => console.error(error))
 })
 

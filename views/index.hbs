@@ -33,9 +33,12 @@
               id='sortBy'
               name='sortBy'
             >
-              {{#each sortData}}
-                <option value='{{this.value}}' {{#if (isEqual ../sortBy this.value)}} selected {{/if}}>{{this.title}}</option>
-              {{/each}}
+            {{#unless sortBy}}
+              {{setVariable 'sortBy' 'normal'}}
+            {{/unless}}
+            {{#each sortData}}
+              <option value='{{this.value}}' {{#if (isEqual @root.sortBy this.value)}} selected {{/if}}>{{this.title}}</option>
+            {{/each}}
             </select>
           </div>
         </div>
@@ -46,7 +49,9 @@
 
 <!-- restaurant list -->
 <div class='container mt-5'>
-  {{{searchTip}}}
+  {{#unless restaurants}}
+    <h1 class="text-info text-center">查無餐廳資料</h1>
+  {{/unless}}
   <div class='row col-lg-10 col-12 mx-auto'>
     {{#each restaurants}}
       <div class='col-12 col-sm-6 col-md-4 mb-3'>
